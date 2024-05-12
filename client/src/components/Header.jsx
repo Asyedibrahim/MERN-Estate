@@ -26,15 +26,15 @@ export default function Header() {
 
             <ul className='flex gap-7'>
               <Link to="/" className='flex items-center gap-1'>
-                <FaHome />
+                <FaHome className='hidden sm:inline text-slate-700'/>
                 <li className='hidden sm:inline text-slate-700 hover:underline font-bold'>Home</li>
               </Link>
               <Link to="about" className='flex items-center gap-1'>
-                <MdMessage />
+                <MdMessage  className='hidden sm:inline text-slate-700'/>
                 <li className='hidden sm:inline text-slate-700 hover:underline font-bold'>About</li>
               </Link>
               <Link to="/sign-in" className='flex items-center gap-1'>
-                <FaSignInAlt/>
+                <FaSignInAlt  className='text-slate-700'/>
                 <li className='text-slate-700 hover:underline font-bold'>Sign In</li>
               </Link>
             </ul>
