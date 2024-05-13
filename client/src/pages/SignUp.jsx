@@ -21,7 +21,8 @@ export default function SignUp() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch('/api/auth/signup', 
+      {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className='mt-5 p-9 max-w-xl mx-auto border-0 sm:border-2 sm:shadow-lg rounded-lg signup'>
+    <div className='mt-5 p-9 max-w-xl mx-auto border-0 sm:border-2 sm:shadow-lg rounded-lg'>
 
       <h1 className='text-3xl text-center font-bold mb-7 '>Sign Up</h1>
 

@@ -44,7 +44,7 @@ export default function SignIp() {
   };
 
   return (
-    <div className='mt-5 p-9 max-w-xl mx-auto border-0 sm:border-2 sm:shadow-lg rounded-lg signup'>
+    <div className='mt-5 p-9 max-w-xl mx-auto border-0 sm:border-2 sm:shadow-lg rounded-lg'>
 
       <h1 className='text-3xl text-center font-bold mb-7 '>Sign In</h1>
 
