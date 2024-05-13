@@ -3,8 +3,12 @@ import { FaHome } from "react-icons/fa";
 import { MdMessage } from "react-icons/md";
 import { FaSignInAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 export default function Header() {
+  const {currentUser} = useSelector(state => state.user);
+
   return (
     <header className='bg-slate-200 shadow-md'>
         <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
@@ -33,9 +37,15 @@ export default function Header() {
                 <MdMessage  className='hidden sm:inline text-slate-700'/>
                 <li className='hidden sm:inline text-slate-700 hover:underline font-bold'>About</li>
               </Link>
-              <Link to="/sign-in" className='flex items-center gap-1'>
-                <FaSignInAlt  className='text-slate-700'/>
-                <li className='text-slate-700 hover:underline font-bold'>Sign In</li>
+              <Link to="/profile" className='flex items-center gap-1'>
+                {currentUser ? (
+                    <img src={currentUser.avatar} alt="profile" className='rounded-full h-7 w-7 object-cover'/>
+                 ) : (
+                  <>
+                    <FaSignInAlt  className='text-slate-700'/>
+                    <li className='text-slate-700 hover:underline font-bold'>Sign In</li>
+                  </>
+                 )}
               </Link>
             </ul>
 
