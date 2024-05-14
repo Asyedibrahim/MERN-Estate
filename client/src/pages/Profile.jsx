@@ -28,6 +28,7 @@ export default function Profile() {
   }, [file]);
 
   const handleFileUpload = (file) => {
+
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -45,6 +46,7 @@ export default function Profile() {
           ( (downloadURL) => setFormData({...formData, avatar: downloadURL }) );
       },
     );
+
   };
 
   return (
@@ -67,13 +69,14 @@ export default function Profile() {
         <p className="text-sm text-center">
           {fileUploadError ? (
             <span className="text-red-700 font-semibold">Error image upload (image must be less than 2mb)</span>
-          ) : filePerc > 0 && filePerc < 100 ? (
-            <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
-          ) : filePerc === 100 ? (
-            <span className="text-green-700">Image Uploaded Successfully!</span>
-          ) : (
-            ''
-          )}
+            ) : filePerc > 0 && filePerc < 100 ? (
+              <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
+            ) : filePerc === 100 ? (
+              <span className="text-green-700">Image Uploaded Successfully!</span>
+            ) : (
+              ''
+            )
+          }
         </p>
 
         <input type="text" placeholder="Username" className='border-2 p-3 rounded-lg' id="username" />
