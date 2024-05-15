@@ -15,7 +15,6 @@ export default function App() {
 
     <Header />
     <Toaster
-      position="top-right"
       reverseOrder={false}
     />
 

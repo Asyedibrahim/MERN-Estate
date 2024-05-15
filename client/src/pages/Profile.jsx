@@ -6,6 +6,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutFailure, signInStart, signOutSuccess } from "../redux/user/userSlice";
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 
@@ -88,20 +89,32 @@ export default function Profile() {
 
   const handleDelete = async () => {
     try {
-      dispatch(deleteUserStart());
-      const res = await fetch(`api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this account!',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel !'
       });
-
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
-        toast.error(data.message);
-        return; 
+  
+      if (result.isConfirmed) {
+        dispatch(deleteUserStart());
+        const res = await fetch(`api/user/delete/${currentUser._id}`, {
+          method: 'DELETE',
+        });
+        const data = await res.json();
+        if (data.success === false) {
+          dispatch(deleteUserFailure(data.message));
+          toast.error(data.message);
+          return;
+        }
+        dispatch(deleteUserSuccess(data));
+        toast.success('Account deleted successfully!');
       }
-      dispatch(deleteUserSuccess(data));
-      toast.success("Account deleted successfully!");
-
+      
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
       toast.error(error.message);
@@ -110,16 +123,28 @@ export default function Profile() {
 
   const handleSignout = async () => {
     try{
-      dispatch(signInStart());
-      const res = await fetch('api/auth/signout');
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(signOutFailure(data.message));
-        toast.error(data.message);
-        return;
+      const result = await Swal.fire({
+        title: 'Are you want to sign out?',
+        text: 'You will be logged out of your account!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sign out!',
+        cancelButtonText: 'Cancel!'
+      });
+      if (result.isConfirmed) {
+        dispatch(signInStart());
+        const res = await fetch('api/auth/signout');
+        const data = await res.json();
+        if (data.success === false) {
+          dispatch(signOutFailure(data.message));
+          toast.error(data.message);
+          return;
+        }
+        dispatch(signOutSuccess(data));
+        toast.success("Signed out successfully!");
       }
-      dispatch(signOutSuccess(data));
-      toast.success("Signed out successfully!");
 
     } catch (error) {
       dispatch(signOutFailure(error.message));
