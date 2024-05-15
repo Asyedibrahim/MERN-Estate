@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase";
-import { updateUserStart, updateUserSuccess, updateUserFailure } from "../redux/user/userSlice";
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
 
@@ -81,6 +81,26 @@ export default function Profile() {
     } catch (error) {
       dispatch(updateUserFailure(error.message))
     }
+  };
+
+  const handleDelete = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return; 
+      }
+
+      dispatch(deleteUserSuccess(data));
+
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
   }
 
   return (
@@ -121,7 +141,7 @@ export default function Profile() {
       </form>
 
       <div className="flex justify-between mt-5 font-semibold">
-        <span className="text-red-700 cursor-pointer flex items-center"><MdDelete />&nbsp;Delete Account</span>
+        <span className="text-red-700 cursor-pointer flex items-center" onClick={handleDelete}><MdDelete />&nbsp;Delete Account</span>
         <span className="text-red-700 cursor-pointer flex items-center"><FaSignOutAlt />&nbsp;Sign Out</span>
       </div>
       
