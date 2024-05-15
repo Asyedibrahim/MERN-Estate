@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { FaSignOutAlt, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutFailure, signInStart, signOutSuccess } from "../redux/user/userSlice";
-import { useDispatch } from "react-redux";
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 
 export default function Profile() {
@@ -165,7 +165,9 @@ export default function Profile() {
         <input type="password" placeholder='Password' className='border-2 border-gray-300 pl-3 p-2 rounded-lg' id="password" onChange={handleChange} />
 
         <button disabled={loading} className="bg-slate-700 text-white p-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80 font-semibold">{loading ? 'Loading...' : 'Update'}</button>
-        <button className="bg-green-700 text-white p-2 font-semibold uppercase rounded-lg hover:opacity-95">listing</button>
+        <Link to={"/create-listing"} className="bg-green-700 text-white p-2 font-semibold uppercase rounded-lg hover:opacity-95 text-center">
+          creating listing
+        </Link>
       </form>
 
       <div className="flex justify-between mt-5 font-semibold">
