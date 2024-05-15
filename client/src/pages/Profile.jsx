@@ -6,6 +6,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOutFailure, signInStart, signOutSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import toast from 'react-hot-toast';
 
 
 export default function Profile() {
@@ -45,10 +46,12 @@ export default function Profile() {
       },
       (error) => {
         setFileUploadError(true);
+        toast.error("Error uploading image (image must be less than 2mb)");
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then
           ( (downloadURL) => setFormData({...formData, avatar: downloadURL }) );
+          toast.success("Image Uploaded Successfully!");
       },
     );
 
@@ -73,13 +76,16 @@ export default function Profile() {
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
+        toast.error(data.message);
         return;
       }
       dispatch(updateUserSuccess(data))
       setUpdateSuccess(true);
+      toast.success("User Updated Successfully!");
 
     } catch (error) {
       dispatch(updateUserFailure(error.message))
+      toast.error(error.message);
     }
   };
 
@@ -93,13 +99,15 @@ export default function Profile() {
       const data = await res.json();
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
+        toast.error(data.message);
         return; 
       }
-
       dispatch(deleteUserSuccess(data));
+      toast.success("Account deleted successfully!");
 
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -110,11 +118,15 @@ export default function Profile() {
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutFailure(data.message));
+        toast.error(data.message);
         return;
       }
       dispatch(signOutSuccess(data));
+      toast.success("Signed out successfully!");
+
     } catch (error) {
-      dispatch(signOutFailure(error.message))
+      dispatch(signOutFailure(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -137,11 +149,11 @@ export default function Profile() {
 
         <p className="text-sm text-center">
           {fileUploadError ? (
-            <span className="text-red-700 font-semibold">Error image upload (image must be less than 2mb)</span>
+            ''
             ) : filePerc > 0 && filePerc < 100 ? (
               <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
             ) : filePerc === 100 ? (
-              <span className="text-green-700">Image Uploaded Successfully!</span>
+              ''
             ) : (
               ''
             )
@@ -159,9 +171,6 @@ export default function Profile() {
         <span className="text-red-700 cursor-pointer flex items-center" onClick={handleDelete}><MdDelete />&nbsp;Delete Account</span>
         <span className="text-red-700 cursor-pointer flex items-center" onClick={handleSignout}><FaSignOutAlt />&nbsp;Sign Out</span>
       </div>
-      
-      <p className="text-red-700 mt-5">{error ? error : ''}</p>
-      <p className="text-green-700 mt-5">{updateSuccess ? 'User Updated Successfully!' : ''}</p>
       
     </div>
   )

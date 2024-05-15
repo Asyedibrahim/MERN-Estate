@@ -6,12 +6,17 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
+import { Toaster } from 'react-hot-toast';
 
 export default function App() {
   return (
     <BrowserRouter>
 
     <Header />
+    <Toaster
+      position="top-right"
+      reverseOrder={true}
+    />
 
     <Routes>
       <Route path="/" element={<Home />} />

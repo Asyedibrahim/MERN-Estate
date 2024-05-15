@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import OAuth from '../components/OAuth';
+import toast from 'react-hot-toast';
+
 
 export default function SignUp() {
 
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -34,15 +35,15 @@ export default function SignUp() {
       const data = await res.json(); // Converting "res" to "json format" store in a variable "data"
       if(data.success === false) {
         setLoading(false);
-        setError(data.message);
+        toast.error(data.message);
         return;
       }
         setLoading(false);
-        setError(null);
+        toast.success("User signed up successfully!");
         navigate('/sign-in');
       } catch (error) {
         setLoading(false);
-        setError(error.message);
+        toast.error(error.message);
       }
   };
 
@@ -68,7 +69,6 @@ export default function SignUp() {
           <span className='text-blue-700 font-semibold hover:underline'>Sign In</span>
         </Link>
       </div>
-      {error && <p className='text-red-500 mt-5'>{error}</p>}
 
     </div>
   )

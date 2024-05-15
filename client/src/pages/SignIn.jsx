@@ -3,11 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 import OAuth from '../components/OAuth';
+import toast from 'react-hot-toast';
 
 export default function SignIp() {
 
   const [formData, setFormData] = useState({});
-  const { loading, error } = useSelector( (state) => state.user );
+  const { loading } = useSelector( (state) => state.user );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,12 +36,16 @@ export default function SignIp() {
       const data = await res.json(); // Converting "res" to "json format" store in a variable "data"
       if(data.success === false) {
         dispatch(signInFailure(data.message));
+        toast.error(data.message);
         return;
       }
         dispatch(signInSuccess(data));
+        toast.success('User signed in successfully!')
         navigate('/');
+
       } catch (error) {
         dispatch(signInFailure(error.message));
+        toast.error(error.message);
       }
   };
 
@@ -64,7 +69,6 @@ export default function SignIp() {
           <span className='text-blue-700 font-semibold hover:underline'>Sign Up</span>
         </Link>
       </div>
-      {error && <p className='text-red-500 mt-5'>{error}</p>}
 
     </div>
   )
