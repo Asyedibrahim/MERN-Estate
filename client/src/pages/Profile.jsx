@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
@@ -11,14 +11,13 @@ import toast from 'react-hot-toast';
 
 export default function Profile() {
 
-  const {currentUser, loading, error} = useSelector(state => state.user);
+  const {currentUser, loading} = useSelector(state => state.user);
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
-  const [ updateSuccess, setUpdateSuccess ] = useState(false);
   
 
   // firebase storage
@@ -45,7 +44,6 @@ export default function Profile() {
       setFilePerc(Math.round(progress));
       },
       (error) => {
-        setFileUploadError(true);
         toast.error("Error uploading image (image must be less than 2mb)");
       },
       () => {
@@ -80,7 +78,6 @@ export default function Profile() {
         return;
       }
       dispatch(updateUserSuccess(data))
-      setUpdateSuccess(true);
       toast.success("User Updated Successfully!");
 
     } catch (error) {
@@ -131,9 +128,9 @@ export default function Profile() {
   };
 
   return (
-    <div className='mt-5 p-9 max-w-lg mx-auto border-0 sm:border-2 sm:shadow-lg rounded-lg'>
+    <div className='max-w-md mx-auto '>
 
-      <h1 className='text-3xl text-center font-bold mb-7 '>Profile</h1>
+      <h1 className='text-3xl text-center font-bold my-7 '>Profile</h1>
 
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <input 
@@ -142,14 +139,17 @@ export default function Profile() {
           ref={fileRef} 
           hidden 
           accept="image/*"/>
-        <img 
-          src={formData.avatar || currentUser.avatar} 
-          alt="Profile" className="rounded-full w-24 h-24 object-cover self-center mt-2" 
-          onClick={()=>fileRef.current.click()} />
 
+        <div className="self-center flex items-end">
+          <img 
+            src={formData.avatar || currentUser.avatar} 
+            alt="Profile" className="rounded-full w-24 h-24 object-cover  mt-2"
+            onClick={()=>fileRef.current.click()} /><FaEdit className="text-slate-700 -ml-2" onClick={()=>fileRef.current.click()}/>
+        </div>
+        
         <p className="text-sm text-center">
           {fileUploadError ? (
-            ''
+              ''
             ) : filePerc > 0 && filePerc < 100 ? (
               <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
             ) : filePerc === 100 ? (
@@ -160,11 +160,12 @@ export default function Profile() {
           }
         </p>
 
-        <input type="text" placeholder="Username" className='border-2 p-3 rounded-lg' id="username" defaultValue={currentUser.username} onChange={handleChange}/>
-        <input type="email" placeholder='Email' className='border-2 p-3 rounded-lg' id="email" defaultValue={currentUser.email} onChange={handleChange} />
-        <input type="password" placeholder='Password' className='border-2 p-3 rounded-lg' id="password" onChange={handleChange} />
+        <input type="text" placeholder="Username" className='border-2 border-gray-300 p-2 pl-3 rounded-lg' id="username" defaultValue={currentUser.username} onChange={handleChange}/>
+        <input type="email" placeholder='Email' className='border-2 border-gray-300 p-2 pl-3 rounded-lg' id="email" defaultValue={currentUser.email} onChange={handleChange} />
+        <input type="password" placeholder='Password' className='border-2 border-gray-300 pl-3 p-2 rounded-lg' id="password" onChange={handleChange} />
 
-        <button disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80 font-semibold">{loading ? 'Loading...' : 'Update'}</button>
+        <button disabled={loading} className="bg-slate-700 text-white p-2 rounded-lg uppercase hover:opacity-95 disabled:opacity-80 font-semibold">{loading ? 'Loading...' : 'Update'}</button>
+        <button className="bg-green-700 text-white p-2 font-semibold uppercase rounded-lg hover:opacity-95">listing</button>
       </form>
 
       <div className="flex justify-between mt-5 font-semibold">

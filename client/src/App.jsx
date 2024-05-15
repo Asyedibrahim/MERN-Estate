@@ -15,7 +15,7 @@ export default function App() {
     <Header />
     <Toaster
       position="top-right"
-      reverseOrder={true}
+      reverseOrder={false}
     />
 
     <Routes>

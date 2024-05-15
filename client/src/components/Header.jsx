@@ -1,6 +1,6 @@
 import {FaSearch} from 'react-icons/fa';
 import { FaHome } from "react-icons/fa";
-import { MdMessage } from "react-icons/md";
+import { MdMessage, MdOutlineRealEstateAgent } from "react-icons/md";
 import { FaSignInAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -14,9 +14,10 @@ export default function Header() {
         <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
 
           <Link to="/" >
-            <h1 className='font-bold text-md sm:text-xl flex flex-wrap'>
+            <h1 className='font-bold text-md sm:text-xl flex items-center flex-wrap'>
                 <span className='text-green-500'>Zoro</span>
-                <span className='text-slate-700'>Estate</span>
+                <span className='text-slate-700'>Estate&nbsp;</span>
+                <MdOutlineRealEstateAgent className='text-slate-700'/>
             </h1>
           </Link>
           
