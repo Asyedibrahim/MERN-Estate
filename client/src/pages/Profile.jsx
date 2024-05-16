@@ -48,8 +48,7 @@ export default function Profile() {
         toast.error("Error uploading image (image must be less than 2mb)");
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then
-          ( (downloadURL) => setFormData({...formData, avatar: downloadURL }) );
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => setFormData({...formData, avatar: downloadURL }) );
           toast.success("Image Uploaded Successfully!");
       },
     );
