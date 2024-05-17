@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
-import { FaSignOutAlt, FaEdit } from "react-icons/fa";
+import { FaSignOutAlt, FaEdit, FaList } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
@@ -19,6 +19,7 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
+  const [userListings, setUserListings] = useState([]);
   
 
   // firebase storage
@@ -151,6 +152,21 @@ export default function Profile() {
     }
   };
 
+  const handleShowListing = async () => {
+    try {
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        toast.error('Error! Showing Lisitng');
+        return;
+      }
+        toast.success("Showing Your Listings");
+        setUserListings(data);
+    } catch (error) {
+      toast.error('Error! Showing Lisitng');
+    }
+  }
+
   return (
     <div className='max-w-md mx-auto '>
 
@@ -198,7 +214,31 @@ export default function Profile() {
         <span className="text-red-700 cursor-pointer flex items-center" onClick={handleDelete}><MdDelete />&nbsp;Delete Account</span>
         <span className="text-red-700 cursor-pointer flex items-center" onClick={handleSignout}><FaSignOutAlt />&nbsp;Sign Out</span>
       </div>
-      
+
+      <button onClick={handleShowListing} className="text-green-700 w-full justify-center font-semibold flex items-center mt-3"><FaList />&nbsp;Show Listings</button>
+
+      {userListings && userListings.length > 0 && 
+        <div className="flex flex-col gap-4">
+          <h1 className="text-center mt-7 text-2xl font-semibold">Your Listings</h1>
+
+          {userListings.map( (listing) => (
+            <div key={listing._id} className="border border-slate-200 rounded-lg p-3 flex justify-between items-center gap-4 hover:shadow-lg transition-all">
+                <Link to={`/listing/${listing._id}`}>
+                  <img src={listing.imageUrls[0]} alt="listing cover" className="h-16 w-16 object-contain"/>
+                </Link>
+                <Link to={`/listing/${listing._id}`} className="text-slate-700 font-semibold flex-1 truncate">
+                  <p>{listing.name}</p>
+                </Link>
+                <div className="flex flex-col items-center">
+                  <button className="text-red-700">DELETE</button>
+                  <button className="text-green-700">EDIT</button>
+                </div>
+              </div>
+            ))}
+
+        </div>
+      }
+  
     </div>
   )
 }
