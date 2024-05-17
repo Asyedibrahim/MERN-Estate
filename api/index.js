@@ -19,7 +19,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cookieParser());
+app.use(cookieParser()); // used to extract cookie data from HTTP requests
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000!');

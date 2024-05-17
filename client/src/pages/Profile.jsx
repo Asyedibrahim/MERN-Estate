@@ -160,10 +160,40 @@ export default function Profile() {
         toast.error('Error! Showing Lisitng');
         return;
       }
+      if (data < 1) return toast.error('No Listing Available')
         toast.success("Showing Your Listings");
         setUserListings(data);
     } catch (error) {
       toast.error('Error! Showing Lisitng');
+    }
+  };
+
+  const handleDeleteListing = async (listingId) => {
+    try {
+      const result = await Swal.fire({
+        title: 'Are you want to Delete?',
+        text: 'You will not be able to recover this Listing!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Delete Listing!',
+        cancelButtonText: 'Keep it!'
+      });
+      if (result.isConfirmed) {
+        const res = await fetch(`/api/listing/delete/${listingId}`, {
+          method: 'DELETE',
+        });
+        const data = await res.json();
+        if (data.success === false) {
+          console.log(data.message);
+          return;
+        }
+        toast.success('Listing deleted successfully!');
+        setUserListings( (prev) => prev.filter((listing) => listing._id !== listingId ))
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
@@ -215,7 +245,7 @@ export default function Profile() {
         <span className="text-red-700 cursor-pointer flex items-center" onClick={handleSignout}><FaSignOutAlt />&nbsp;Sign Out</span>
       </div>
 
-      <button onClick={handleShowListing} className="text-green-700 w-full justify-center font-semibold flex items-center mt-3"><FaList />&nbsp;Show Listings</button>
+      <button onClick={handleShowListing} className="text-green-700 w-full justify-center font-semibold flex items-center "><FaList />&nbsp;Show Listings</button>
 
       {userListings && userListings.length > 0 && 
         <div className="flex flex-col gap-4">
@@ -230,7 +260,7 @@ export default function Profile() {
                   <p>{listing.name}</p>
                 </Link>
                 <div className="flex flex-col items-center">
-                  <button className="text-red-700">DELETE</button>
+                  <button className="text-red-700" onClick={() => handleDeleteListing(listing._id)}>DELETE</button>
                   <button className="text-green-700">EDIT</button>
                 </div>
               </div>
