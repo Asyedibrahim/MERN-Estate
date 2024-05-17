@@ -20,6 +20,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const [userListings, setUserListings] = useState([]);
+  const scrollRef = useRef();
   
 
   // firebase storage
@@ -152,6 +153,12 @@ export default function Profile() {
     }
   };
 
+  useEffect(() => {
+    if (userListings.length > 0) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [userListings]);
+
   const handleShowListing = async () => {
     try {
       const res = await fetch(`/api/user/listings/${currentUser._id}`);
@@ -162,7 +169,8 @@ export default function Profile() {
       }
       if (data < 1) return toast.error('No Listing Available')
         toast.success("Showing Your Listings");
-        setUserListings(data);
+        setUserListings(data); // important
+    
     } catch (error) {
       toast.error('Error! Showing Lisitng');
     }
@@ -200,7 +208,7 @@ export default function Profile() {
   return (
     <div className='max-w-md mx-auto '>
 
-      <h1 className='text-3xl text-center font-bold my-7 '>Profile</h1>
+      <h1 className='text-3xl text-center font-bold my-5 '>Profile</h1>
 
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <input 
@@ -248,7 +256,7 @@ export default function Profile() {
       <button onClick={handleShowListing} className="text-green-700 w-full justify-center font-semibold flex items-center "><FaList />&nbsp;Show Listings</button>
 
       {userListings && userListings.length > 0 && 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4" ref={scrollRef}>
           <h1 className="text-center mt-7 text-2xl font-semibold">Your Listings</h1>
 
           {userListings.map( (listing) => (

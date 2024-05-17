@@ -154,7 +154,7 @@ export default function CreateListing() {
       if (data.success === false) {
         toast.error(data.message);
       }
-      toast.success('Listing has been created succesfully');
+      toast.success('Listing has been Updated succesfully');
       navigate(`/listing/${data._id}`);
     } catch (error) {
       toast.error(error.message);
@@ -234,7 +234,7 @@ export default function CreateListing() {
 
           <div className='flex gap-4'>
             <input className='p-3 border border-gray-300 rounded w-full' type="file" id='images' accept='image/*' multiple onChange={(e)=>setFiles(e.target.files)}/>
-            <button disabled={uploading} className='p-3 text-green-700 border border-green-700 rounded uppercase disabled:opacity-80 upload font-semibold hover:shadow-lg' onClick={handleImageSubmit}>{uploading ? 'Uploading...' : 'Upload'}</button>
+            <button disabled={uploading} className='p-3 text-green-700 border border-green-700 rounded uppercase disabled:opacity-80 upload font-semibold hover:shadow-lg' onClick={handleImageSubmit} > {uploading ? 'Uploading...' : 'Upload'}</button>
           </div>
           {
             formData.imageUrls.length > 0 && formData.imageUrls.map( (url, index) => (
