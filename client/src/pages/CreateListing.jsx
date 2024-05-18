@@ -1,8 +1,7 @@
 import { BsHouseCheck } from "react-icons/bs";
-import { MdSell, MdOutlineBathroom, MdDelete } from "react-icons/md";
-import { FaParking, FaPaintRoller, FaImages } from "react-icons/fa";
+import { MdSell, MdDelete } from "react-icons/md";
+import { FaParking, FaImages, FaChair, FaBed, FaBath } from "react-icons/fa";
 import { BiSolidOffer, BiSolidBadgeDollar } from "react-icons/bi";
-import { IoIosBed } from "react-icons/io";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { useState } from "react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
@@ -174,7 +173,7 @@ export default function CreateListing() {
             </div>
             <div className='flex gap-2'>
               <input type="checkbox" className='w-5' id="furnished" onChange={handleChange} checked={formData.furnished} />
-              <span className="flex items-center">Furnished&nbsp;<FaPaintRoller className="text-slate-700"/></span>
+              <span className="flex items-center">Furnished&nbsp;<FaChair className="text-slate-700"/></span>
             </div>
             <div className='flex gap-2'>
               <input type="checkbox" className='w-5' id="offer" onChange={handleChange} checked={formData.offer} />
@@ -185,11 +184,11 @@ export default function CreateListing() {
           <div className='flex flex-wrap gap-6'>
             <div className='flex items-center gap-2'>
               <input type="number" id='bedrooms' min='1' max='10' required className='p-3 border-2 border-slate-300 rounded-lg' onChange={handleChange} value={formData.bedrooms} />
-              <p className="flex items-center">Beds&nbsp;<IoIosBed className="text-slate-700"/></p>
+              <p className="flex items-center">Beds&nbsp;<FaBed className="text-slate-700"/></p>
             </div>
             <div className='flex items-center gap-2'>
               <input type="number" id='bathrooms' min='1' max='10' required className='p-3 border-2 border-slate-300 rounded-lg' onChange={handleChange} value={formData.bathrooms} />
-              <p className="flex items-center">Bathrooms&nbsp;<MdOutlineBathroom className="text-slate-700"/></p>
+              <p className="flex items-center">Bathrooms&nbsp;<FaBath className="text-slate-700"/></p>
             </div>
             <div className='flex items-center gap-2'>
               <input type="number" id='regularPrice' min='50' max='100000000' required className='p-3 border-2 border-slate-300 rounded-lg' onChange={handleChange} value={formData.regularPrice}/>
