@@ -259,24 +259,28 @@ export default function Profile() {
         <div className="flex flex-col gap-4" ref={scrollRef}>
           <h1 className="text-center mt-7 text-2xl font-semibold">Your Listings</h1>
 
-          {userListings.map( (listing) => (
-            <div key={listing._id} className="border border-slate-200 rounded-lg p-3 flex justify-between items-center gap-4 hover:shadow-lg transition-all">
-                <Link to={`/listing/${listing._id}`}>
-                  <img src={listing.imageUrls[0]} alt="listing cover" className="h-16 w-16 object-contain"/>
-                </Link>
-                <Link to={`/listing/${listing._id}`} className="text-slate-700 font-semibold flex-1 truncate">
-                  <p>{listing.name}</p>
-                </Link>
-                <div className="flex flex-col items-center">
-                  <button className="text-red-700" onClick={() => handleDeleteListing(listing._id)} >DELETE</button>
-                  <Link to={`/update-listing/${listing._id}`} >
-                    <button className="text-green-700" >EDIT</button>
+          {userListings
+            .slice()
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((listing) => (
+              <div className="border border-slate-200 rounded-lg p-3 flex justify-between items-center gap-4 hover:shadow-lg">
+                
+                  <Link to={`/listing/${listing._id}`}>
+                    <img src={listing.imageUrls[0]} alt="listing cover" className="h-16 w-16 object-contain"/>
                   </Link>
+                  <Link to={`/listing/${listing._id}`} className="text-slate-700 font-semibold flex-1 truncate">
+                    <p>{listing.name}</p>
+                  </Link>
+
+                  <div className="flex flex-col items-center">
+                    <button className="text-red-700" onClick={() => handleDeleteListing(listing._id)} >DELETE</button>
+                    <Link to={`/update-listing/${listing._id}`} >
+                      <button className="text-green-700" >EDIT</button>
+                    </Link>
+                  </div>
                   
                 </div>
-              </div>
             ))}
-
         </div>
       }
   
