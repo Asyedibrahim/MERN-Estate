@@ -86,11 +86,11 @@ return (
               {listing.offer ? 
               <div className='flex items-center'>
                 <p className='text-red-600 line-through text-[20px] ml-2'>₹ {listing.regularPrice.toLocaleString('en-US')}&nbsp;</p>
-                <p>&nbsp;₹ {listing.discountPrice.toLocaleString('en-US')}</p> 
+                <p>&nbsp;₹ {listing.discountPrice.toLocaleString('en-US')}&nbsp;</p> 
               </div> 
               : <p>&nbsp;₹ {listing.regularPrice.toLocaleString('en-US')}</p>}
 
-              {listing.type === 'rent' && ' / month'}
+              {listing.type === 'rent' && '/ month'}
             </div>
 
             <p className='flex items-center mt-6 gap-6 text-slate-600 my-2'>
