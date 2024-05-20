@@ -158,7 +158,7 @@ export default function CreateListing() {
           <textarea type="text" placeholder="Description" className='border-2 border-gray-300 p-3 rounded-lg' id="description"  required onChange={handleChange} value={formData.description} />
           <input type="text" placeholder="Address" className='border-2 border-gray-300 p-3 rounded-lg' id="address" required onChange={handleChange} value={formData.address} />
 
-          <div className='flex gap-6 flex-wrap mt-2'>
+          <div className='flex items-center gap-6 flex-wrap mt-2'>
             <div className='flex gap-2'>
               <input type="checkbox" className='w-5' id="sale" onChange={handleChange} checked={formData.type === 'sale'} />
               <span className="flex items-center">Sell&nbsp;<MdSell className="text-slate-700"/></span>

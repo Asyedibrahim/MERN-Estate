@@ -206,7 +206,7 @@ export default function Profile() {
   }
 
   return (
-    <div className='max-w-md mx-auto '>
+    <div className='max-w-md mx-auto p-2'>
 
       <h1 className='text-3xl text-center font-bold my-5 '>Profile</h1>
 
@@ -253,7 +253,7 @@ export default function Profile() {
         <span className="text-red-700 cursor-pointer flex items-center" onClick={handleSignout}><FaSignOutAlt />&nbsp;Sign Out</span>
       </div>
 
-      <button onClick={handleShowListing} className="text-green-700 w-full justify-center font-semibold flex items-center "><FaList />&nbsp;Show Listings</button>
+      <button onClick={handleShowListing} className="text-green-700 w-full justify-center font-semibold flex items-center mt-3 sm:mt-0"><FaList />&nbsp;Show Listings</button>
 
       {userListings && userListings.length > 0 && 
         <div className="flex flex-col gap-4" ref={scrollRef}>

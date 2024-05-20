@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ListingItem from '../components/ListingItem';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import 'swiper/swiper-bundle.css';
@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 
 export default function Home() {
 
-  SwiperCore.use([Navigation, Autoplay, EffectFade ])
+  SwiperCore.use([Navigation, Autoplay ])
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
@@ -67,11 +67,11 @@ export default function Home() {
       {/* Top Ends */}
 
       {/* swiper Starts */}
-      <Swiper navigation autoplay={{ delay: 2000 }} loop={true} effect="fade" speed={1000}>
+      <Swiper navigation autoplay={{ delay: 3000 }} loop={true} speed={1000}>
         {offerListings && offerListings.length > 0 && offerListings.map((listing) => (
           <SwiperSlide key={listing._id}>
             <div>
-              <img src={listing.imageUrls[0]} alt="offer listing" className='h-[500px] object-cover w-full'/>
+              <img src={listing.imageUrls[0]} alt="offer listing" className='h-[200px] md:h-[300px] lg:h-[450px] object-cover w-full'/>
             </div>
           </SwiperSlide>
         ))

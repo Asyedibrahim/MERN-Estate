@@ -33,17 +33,17 @@ export default function Header() {
         <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
 
           <Link to="/" >
-            <h1 className='font-bold text-md sm:text-xl flex items-center flex-wrap'>
+            <h1 className='font-bold text-sm sm:text-xl flex items-center flex-wrap'>
                 <span className='text-green-500'>Zoro</span>
                 <span className='text-slate-700'>Estate&nbsp;</span>
                 <MdOutlineRealEstateAgent className='text-slate-700'/>
             </h1>
           </Link>
           
-            <form onSubmit={handleSubmit} className='bg-slate-100 p-3 rounded-lg flex items-center'>
+            <form onSubmit={handleSubmit} className='bg-slate-100 p-2 sm:p-3 rounded-lg flex items-center'>
                 <input 
                   type="text" 
-                  placeholder='Search...' className='bg-transparent focus:outline-none w-28 sm:w-64'
+                  placeholder='Search...' className='bg-transparent focus:outline-none w-16 sm:w-64'
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -61,7 +61,7 @@ export default function Header() {
                 <MdMessage  className='hidden sm:inline text-slate-700'/>
                 <li className='hidden sm:inline text-slate-700 hover:underline font-bold'>About</li>
               </Link>
-              <Link to="/profile" className='flex items-center gap-1'>
+              <Link to="/profile" className='flex items-center gap-1 whitespace-nowrap'>
                 {currentUser ? (
                     <img src={currentUser.avatar} alt="profile" className='rounded-full h-7 w-7 object-cover'/>
                  ) : (

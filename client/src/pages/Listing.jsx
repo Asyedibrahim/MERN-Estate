@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import Contact from '../components/Contact';
 
 export default function Listing() {
 
-    SwiperCore.use([Navigation, Autoplay, EffectFade]);
+    SwiperCore.use([Navigation, Autoplay]);
     const params = useParams();
     const [listing, setListing] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -56,10 +56,10 @@ return (
 {listing && !loading && !error && (
         <div>
           
-          <Swiper navigation autoplay={{delay: 2000}} loop={true} effect="fade" speed={1000}>
+          <Swiper navigation autoplay={{delay: 3000}} loop={true} speed={1000}>
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
-                <img src={url} alt="Estate Photos" className='h-[300px] md:h-[550px] sm:h-[450px] w-full'/>
+                <img src={url} alt="Estate Photos" className='h-[250px] md:h-[550px] sm:h-[450px] w-full'/>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -80,13 +80,13 @@ return (
           )}
 
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-6 gap-4'>
-              <p className='text-2xl font-semibold'>{listing.name}</p>
-            <div className='text-2xl font-semibold flex items-center'>
+              <p className='text-xl sm:text-2xl font-semibold'>{listing.name}</p>
+            <div className='text-md sm:text-2xl font-semibold flex items-center whitespace-nowrap'>
               Price:
               {listing.offer ? 
               <div className='flex items-center'>
-                <p className='text-red-600 line-through text-[20px] ml-2'>₹ {listing.regularPrice.toLocaleString('en-US')}&nbsp;</p>
-                <p>&nbsp;₹ {listing.discountPrice.toLocaleString('en-US')}&nbsp;</p> 
+                <p className='text-red-600 line-through ml-2'>₹ {listing.regularPrice.toLocaleString('en-US')}&nbsp;</p>
+                <p className='text-[20px] sm:text-3xl'>&nbsp;₹ {listing.discountPrice.toLocaleString('en-US')}&nbsp;</p> 
               </div> 
               : <p>&nbsp;₹ {listing.regularPrice.toLocaleString('en-US')}</p>}
 
@@ -99,14 +99,14 @@ return (
             </p>
 
             <div className='flex gap-4'>
-              <p className='bg-red-800 w-full max-w-[200px] text-white text-center font-semibold rounded-md p-2'>{listing.type === 'rent' ? 'For Rent' : 'For Sale'}</p>
+              <p className='bg-red-800 w-full max-w-[200px] text-white text-center font-semibold rounded-md p-2 text-sm sm:text-md'>{listing.type === 'rent' ? 'For Rent' : 'For Sale'}</p>
 
               {listing.offer && (
-                <p className='bg-green-800 w-full max-w-[200px] p-2 text-white rounded-md font-semibold text-center'>₹ {listing.regularPrice - listing.discountPrice}&nbsp;Discount</p>
+                <p className='bg-green-800 w-full max-w-[200px] p-2 text-white rounded-md font-semibold text-center text-sm sm:text-md'>₹ {listing.regularPrice - listing.discountPrice}&nbsp;Discount</p>
               )}
             </div>
 
-              <p className='text-slate-800'><span className='font-semibold text-black'>Description - </span>{listing.description}</p>
+              <p className='text-slate-800 text-sm sm:text-[15px]'><span className='font-semibold text-black'>Description - </span>{listing.description}</p>
 
               <ul className='text-green-900 font-semibold text-sm flex items-center gap-4 sm:gap-6 flex-wrap'>
                 <li className='flex items-center gap-1 whitespace-nowrap'><FaBed className='text-lg'/>{listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : `${listing.bedrooms} Bed`}</li>
