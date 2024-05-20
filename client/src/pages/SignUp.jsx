@@ -8,6 +8,7 @@ export default function SignUp() {
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
 
@@ -35,7 +36,7 @@ export default function SignUp() {
       const data = await res.json(); // Converting "res" to "json format" store in a variable "data"
       if(data.success === false) {
         setLoading(false);
-        toast.error(data.message);
+        setError(data.message)
         return;
       }
         setLoading(false);
@@ -43,7 +44,7 @@ export default function SignUp() {
         navigate('/sign-in');
       } catch (error) {
         setLoading(false);
-        toast.error(error.message);
+        setError(error.message)
       }
   };
 
@@ -69,6 +70,8 @@ export default function SignUp() {
           <span className='text-blue-700 font-semibold hover:underline'>Sign In</span>
         </Link>
       </div>
+
+      {error && <p className='text-red-700 mt-3'>{error}</p>}
 
     </div>
   )

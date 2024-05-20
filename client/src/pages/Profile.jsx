@@ -51,7 +51,6 @@ export default function Profile() {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => setFormData({...formData, avatar: downloadURL }) );
-          toast.success("Image Uploaded Successfully!");
       },
     );
 
@@ -92,7 +91,7 @@ export default function Profile() {
     try {
       const result = await Swal.fire({
         title: 'Are you sure?',
-        text: 'You will not be able to recover this account!',
+        text: 'Your account and all the listing will be delete!',
         icon: 'error',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -231,10 +230,8 @@ export default function Profile() {
             ) : filePerc > 0 && filePerc < 100 ? (
               <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
             ) : filePerc === 100 ? (
-              ''
-            ) : (
-              ''
-            )
+              <span className="text-green-600 text-sm">Uploaded Successfully! Click Update </span>
+            ) : ('')
           }
         </p>
 

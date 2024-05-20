@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
@@ -8,6 +8,7 @@ import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
+import toast from 'react-hot-toast'
 
 export default function Listing() {
 
@@ -115,7 +116,10 @@ return (
                 <li className='flex items-center gap-1 whitespace-nowrap'><FaChair className='text-lg'/>{listing.furnished ? 'Furnished' : 'Not Furnished'}</li>
               </ul>
 
-              { currentUser && listing.userRef !== currentUser._id && !contact && (
+              {!currentUser && 
+                <Link to={'/sign-in'} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3 font-semibold text-center mt-4'>Sign in to Contact landlord</Link>
+              }
+              {currentUser && listing.userRef !== currentUser._id && !contact && (
                 <button onClick={()=>setContact(true)} className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3 font-semibold'>Contact landlord</button>
               )}
               {contact && <Contact listing={listing}/>}

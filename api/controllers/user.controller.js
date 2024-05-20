@@ -42,9 +42,15 @@ export const deleteUser = async (req, res, next) => {
         return next(errorHandler(401, 'You can only delete your own account!'));
 
     try {
+        // Delete Listing of the user
+        await Listing.deleteMany({ userRef: req.params.id })
+
+        // Delete the user
         await User.findByIdAndDelete(req.params.id);
+
+        //Clear the access token cookie
         res.clearCookie('access_token');
-        res.status(200).json('User has been deleted!');
+        res.status(200).json('User and associated listings have been deleted!');
     } catch (error) {
         next(error)
     }
