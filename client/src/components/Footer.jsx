@@ -1,12 +1,11 @@
 import { MdOutlineRealEstateAgent } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaHome } from "react-icons/fa";
 
 export default function Footer() {
     const { currentUser } = useSelector(state => state.user);
   return (
-    <footer className="fixed-bottom bg-slate-200 pt-10 pb-3">
+    <footer className="bg-slate-200 pb-2">
         <div className="max-w-6xl mx-auto  flex flex-col lg:flex-row items-start lg:justify-between p-5">
             <div className="max-w-xl">
                 <h1 className='font-bold text-2xl text-slate-700 flex items-center'><span className='text-green-500'>Zoro</span>Estate <MdOutlineRealEstateAgent className='text-slate-700'/></h1>
