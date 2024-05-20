@@ -1,4 +1,4 @@
-import {FaSearch} from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 import { FaHome } from "react-icons/fa";
 import { MdMessage, MdOutlineRealEstateAgent } from "react-icons/md";
 import { FaSignInAlt } from "react-icons/fa";

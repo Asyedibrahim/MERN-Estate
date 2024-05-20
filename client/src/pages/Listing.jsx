@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import Contact from '../components/Contact';
 
 export default function Listing() {
 
-    SwiperCore.use([Navigation]);
+    SwiperCore.use([Navigation, Autoplay, EffectFade]);
     const params = useParams();
     const [listing, setListing] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -56,7 +56,7 @@ return (
 {listing && !loading && !error && (
         <div>
           
-          <Swiper navigation>
+          <Swiper navigation autoplay={{delay: 2000}} loop={true} effect="fade" speed={1000}>
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
                 <img src={url} alt="Estate Photos" className='h-[300px] md:h-[550px] sm:h-[450px] w-full'/>
@@ -123,6 +123,7 @@ return (
 
         </div>
         )}
+        <hr />
     </main>
   );
 };

@@ -13,3 +13,7 @@ body{
     color: white;
     transition: all 0.5s;
 }
+.swiper-button-prev,
+    .swiper-button-next {
+    color: #fff; 
+  }
