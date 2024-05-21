@@ -32,6 +32,7 @@ export default function CreateListing() {
   const [loading, setLoading] = useState(false);
   const { currentUser } = useSelector(state => state.user);
   const navigate = useNavigate();
+  const [progress, setProgress] = useState(0);
   
 
   const handleImageSubmit = (e) => {
@@ -72,7 +73,7 @@ export default function CreateListing() {
 
       uploadTask.on("state_changed", (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
+        setProgress(progress);
       },
         (error) => {
           reject(error);
@@ -217,8 +218,15 @@ export default function CreateListing() {
 
           <div className='flex gap-4'>
             <input className='p-3 border border-gray-300 rounded w-full' type="file" id='images' accept='image/*' multiple onChange={(e)=>setFiles(e.target.files)}/>
-            <button disabled={uploading} className='p-3 text-green-700 border border-green-700 rounded uppercase disabled:opacity-80 upload font-semibold hover:shadow-lg' onClick={handleImageSubmit}>{uploading ? 'Uploading...' : 'Upload'}</button>
+            <button type="button" disabled={uploading} className='p-3 text-green-700 border border-green-700 rounded uppercase disabled:opacity-80 upload font-semibold hover:shadow-lg' onClick={handleImageSubmit}>{uploading ? 'Uploading...' : 'Upload'}</button>
           </div>
+            {uploading && (
+              <div className="progress-container">
+                <div className="progress-bar" style={{width: `${progress}%`}}></div>
+              </div>
+            )
+            }
+
           {
             formData.imageUrls.length > 0 && formData.imageUrls.map( (url, index) => (
               <div key={url} className="flex justify-between p-3 border items-center">
